@@ -40,7 +40,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 					echo __( $this->_args['plugin_message'] . '</p>');					
 					
 					//Activate button
-					echo '<a href="' . wp_nonce_url('plugins.php?action=activate&amp;plugin=' . $this->pluginpath . '&amp;plugin_status=all&amp;paged=1&amp;s=', 'activate-plugin_' . $this->pluginpath) . '" title="' . esc_attr__('Activate this plugin') . '" class="button">' . __('Activate', 'mp_jplayer') . ' "' . $this->_args['plugin_name'] . '"</a>'; 	
+					echo '<a href="' . wp_nonce_url('plugins.php?action=activate&amp;plugin=' . $this->pluginpath . '&amp;plugin_status=all&amp;paged=1&amp;s=', 'activate-plugin_' . $this->pluginpath) . '" title="' . esc_attr__('Activate this plugin') . '" class="button">' . __('Activate', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>'; 	
 					
 					//Dismiss button
 					$this->mp_core_dismiss_button();
@@ -66,11 +66,11 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 					//If it doesn't, display link which downloads it from your custom URL
 					if (isset($api->errors)){ 
 						// "Oops! this plugin doesn't exist in the repo. So lets display a custom download button."; 
-						printf( __( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_jplayer') . ' "' . $this->_args['plugin_name'] . '"</a>' , 'mp_core' ), admin_url( sprintf( 'plugins.php?page=mp_core_update_plugin_page_' .  $this->_args['plugin_slug'] . '&action=install-plugin&plugin=' . $this->_args['plugin_slug']  . '&_wpnonce=%s', wp_create_nonce( 'install-plugin_' . $this->_args['plugin_download_link']  ) ) ) );	
+						printf( __( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>' , 'mp_core' ), admin_url( sprintf( 'plugins.php?page=mp_core_update_plugin_page_' .  $this->_args['plugin_slug'] . '&action=install-plugin&plugin=' . $this->_args['plugin_slug']  . '&_wpnonce=%s', wp_create_nonce( 'install-plugin_' . $this->_args['plugin_download_link']  ) ) ) );	
 						
 					}else{
 						//Otherwise display the WordPress.org Repo Install button
-						printf( __( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_jplayer') . ' "' . $this->_args['plugin_name'] . '"</a>' , 'mp_core' ), admin_url( sprintf( 'update.php?action=install-plugin&plugin=' . $this->_args['plugin_slug'] . '&_wpnonce=%s', wp_create_nonce( 'install-plugin_' . $this->_args['plugin_slug'] ) ) ) );	
+						printf( __( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>' , 'mp_core' ), admin_url( sprintf( 'update.php?action=install-plugin&plugin=' . $this->_args['plugin_slug'] . '&_wpnonce=%s', wp_create_nonce( 'install-plugin_' . $this->_args['plugin_slug'] ) ) ) );	
 					
 					}
 										
@@ -92,6 +92,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 			if ($this->_args['plugin_required'] == false){
 				echo '<form id="mp_core_plugin_checker_close_notice" method="post" style="display:inline-block; margin-left:.7em;">
 							<input type="hidden" name="mp_core_plugin_checker_' . $this->_args['plugin_slug'] . '" value="false"/>
+							' . wp_nonce_field('mp_core_plugin_checker_' . $this->_args['plugin_slug'] . '_nonce','mp_core_plugin_checker_' . $this->_args['plugin_slug'] . '_nonce_field') . '
 							<input type="submit" id="mp_core_plugin_checker_dismiss" class="button" value="Dismiss" /> 
 					   </form>'; 
 			}
@@ -103,7 +104,11 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 		 */
 		 public function mp_core_close_message(){
 			if (isset($_POST['mp_core_plugin_checker_' . $this->_args['plugin_slug']])){
-				update_option( 'mp_core_plugin_checker_' . $this->_args['plugin_slug'], "false" );
+				//verify nonce
+				if (wp_verify_nonce($_POST['mp_core_plugin_checker_' . $this->_args['plugin_slug'] . '_nonce_field'],'mp_core_plugin_checker_' . $this->_args['plugin_slug'] . '_nonce') ){
+					//update option to not show this message
+					update_option( 'mp_core_plugin_checker_' . $this->_args['plugin_slug'], "false" );
+				}
 			}
 		 }
 	
@@ -138,19 +143,19 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 			
 			screen_icon();
 						
-			echo '<h2>' . __('Install ', 'mp_jplayer') . $this->_args['plugin_name'] . '</h2>';
+			echo '<h2>' . __('Install ', 'mp_core') . $this->_args['plugin_name'] . '</h2>';
 			
 			//Make sure this user has the cpability to install plugins:
-			if (!current_user_can('install_plugins')){ die('<p>' . __('You don\'t have permission to do this. Contact the system administrator for assistance.', 'mp_jplayer') . '</p>'); } 
+			if (!current_user_can('install_plugins')){ die('<p>' . __('You don\'t have permission to do this. Contact the system administrator for assistance.', 'mp_core') . '</p>'); } 
 			
 			//Make sure the action is set to install-plugin
-			if ($_GET['action'] != 'install-plugin'){ die('<p>' . __('Oops! Something went wrong', 'mp_jplayer') . '</p>'); }
+			if ($_GET['action'] != 'install-plugin'){ die('<p>' . __('Oops! Something went wrong', 'mp_core') . '</p>'); }
 									
 			//Get the nonce previously set
 			$nonce=$_REQUEST['_wpnonce'];
 			
 			//Check that nonce to ensure the user wants to do this
-			if (! wp_verify_nonce($nonce, 'install-plugin_' . $this->_args['plugin_download_link']) ) die('<p>' . __('Security Check', 'mp_jplayer') . '</p>'); 
+			if (! wp_verify_nonce($nonce, 'install-plugin_' . $this->_args['plugin_download_link']) ) die('<p>' . __('Security Check', 'mp_core') . '</p>'); 
 			
 			//Set the method for the wp filesystem
 			$method = ''; // Normally you leave this an empty string and it figures it out by itself, but you can override the filesystem method here
@@ -185,29 +190,29 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 			
 			//If we are unable to find the file, let the user know
 			if ( ! $saved_file ) {
-				die('<p>' . __('Unable to find file! Please contact the author of this plugin.', 'mp_jplayer') . '</p>');
+				die('<p>' . __('Unable to find file! Please contact the author of this plugin.', 'mp_core') . '</p>');
 			}
 						
 			//Place the temp zipped file in the plugins directory
 			$created_file = $wp_filesystem->put_contents( $filename, $saved_file, FS_CHMOD_FILE);
 			
 			//Unzip the temp zip file
-			unzip_file($filename, trailingslashit($upload_dir));
+			unzip_file($filename, trailingslashit($upload_dir) . '/' . $this->_args['plugin_slug']);
 			
 			//Delete the temp zipped file
-			$wp_filesystem->rmdir($filename);
+			//$wp_filesystem->rmdir($filename);
 			
 			//If the file was not created, output a message.
 			if ( ! $created_file ) {
-				echo '<p>' . __('Error saving file!', 'mp_jplayer') . '</p>';
-				echo '<p>' . __('Try downloading it directly:', 'mp_jplayer') . $this->_args['plugin_download_link'] . '</p>';
+				echo '<p>' . __('Error saving file!', 'mp_core') . '</p>';
+				echo '<p>' . __('Try downloading it directly:', 'mp_core') . $this->_args['plugin_download_link'] . '</p>';
 			}
 			
 			//Display a successfully installed message
-			echo '<p>' . __('Successfully Activated ', 'mp_jplayer') .  $this->_args['plugin_name']  . '</p>';
+			echo '<p>' . __('Successfully Activated ', 'mp_core') .  $this->_args['plugin_name']  . '</p>';
 			
 			//Display link to plugins page
-			echo '<p><a href="' . network_admin_url('plugins.php') . '">' . __('View all Plugins', 'mp_jplayer') . '</a></p>'; 
+			echo '<p><a href="' . network_admin_url('plugins.php') . '">' . __('View all Plugins', 'mp_core') . '</a></p>'; 
 			
 			echo '</div>';
 			
@@ -217,3 +222,4 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 
 	}
 }
+

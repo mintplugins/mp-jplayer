@@ -117,6 +117,31 @@ if (!function_exists('mp_core_textdomain')){
  * Otherwise, if mp_core is active, carry out the plugin's functions
  */
 else{
+	/**
+	 * Activation Hook for jPlayer
+	 */
+	register_activation_hook( __FILE__, 'mp_jplayer_activate' );
+	require( MP_JPLAYER_PLUGIN_DIR . 'includes/misc-functions/activation.php' );
+	
+	/**
+	 * Custom Post Type for jPlayer
+	 */
+	require( MP_JPLAYER_PLUGIN_DIR . 'includes/custom-post-types/jplayer.php' );
+	
+	/**
+	 * Embed Page Shortcode
+	 */
+	require( MP_JPLAYER_PLUGIN_DIR . 'includes/misc-functions/shortcodes/embed-page-shortcode.php' );
+	
+	/**
+	 * Metabox for Custom Post Type for jPlayer
+	 */
+	require( MP_JPLAYER_PLUGIN_DIR . 'includes/metaboxes/jplayer.php' );
+	
+	/**
+	 * Metabox for Embed Player for jPlayer
+	 */
+	require( MP_JPLAYER_PLUGIN_DIR . 'includes/metaboxes/embed.php' );
 	
 	/**
 	 * Include jplayer template tag from mp_core

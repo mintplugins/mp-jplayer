@@ -5,10 +5,10 @@
  */
 function mp_jplayer_enqueue_jplayer_script(){
 	//jplayer
-	wp_enqueue_script('mp_jplayer', plugins_url('js/jquery.jplayer.min.js', dirname(__FILE__)),  array( 'jquery') );
+	wp_enqueue_script('mp_jplayer', plugins_url('js/jplayer/jquery.jplayer.min.js', dirname(__FILE__)),  array( 'jquery') );
 	
 	//jplayer playlist addon
-	wp_enqueue_script('mp_jplayer_playlist', plugins_url('js/jplayer.playlist.min.js', dirname(__FILE__)),  array( 'jquery', 'mp_jplayer') );
+	wp_enqueue_script('mp_jplayer_playlist', plugins_url('js/jplayer/jplayer.playlist.min.js', dirname(__FILE__)),  array( 'jquery', 'mp_jplayer') );
 	
 	//Filter or set default skin for jplayer 
 	$jplayer_skin_location = has_filter('mp_jplayer_skin_location') ? apply_filters( 'mp_jplayer_skin_location', $first_output) : plugins_url('css/jplayer-mp-core-skin.css', dirname(__FILE__));
@@ -83,6 +83,12 @@ function mp_jplayer($post_id, $content){
 		?>
 	
 		], {
+			playlistOptions: {
+				displayTime: 0,
+				addTime: 0,
+				removeTime: 0,
+				shuffleTime: 0,
+			},
 			swfPath: "<?php echo plugins_url( 'jplayer', dirname(__FILE__)); ?>",
 			wmode: "window",
 			supplied: "<?php 
