@@ -35,6 +35,7 @@ function mp_jplayer_post_type() {
 			'publicly_queryable'=> true,
 			'show_ui' 			=> true, 
 			'show_in_menu' 		=> true, 
+			'show_in_nav_menus' => false,
 			'menu_position'		=> 5,
 			'query_var' 		=> true,
 			'rewrite' 			=> array( 'slug' => 'jplayer' ),

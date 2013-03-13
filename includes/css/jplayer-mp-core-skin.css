@@ -15,7 +15,6 @@
 */
 
 /* MAIN INTERFACE */
-
 div.jp-interface {
  	width: 100%;
  	height: auto;
@@ -126,14 +125,15 @@ a.jp-shuffle, a.jp-shuffle-off{
 a.jp-repeat, a.jp-repeat-off{
 	margin:9px 5px 0px 5px;	
 }
-.jp-controls a:hover, .jp-toggles a:hover, a.loop-off, a.shuffle-off{
+.jp-controls a:hover, .jp-toggles a:hover, a.loop-off, .jp-controls a.shuffle-off, .jp-controls a.jp-repeat-off{
 	color:#00cc99;
 }
 .jp-gui{
 	position:relative;	
 }
 .jp-gui a, .jp-playlist a{
-	color:#DFDFDF
+	color:#DFDFDF;
+	font-size:15px;
 }	
 /* PLAYLIST */
 

@@ -71,19 +71,29 @@ add_action('plugins_loaded', 'mp_jplayer_embed_create_meta_box');
  * We do it in a filter because it makes the post_id available to us
  */ 
 function mp_jplayer_embed_set_embed_code($description, $post_id){
+	
+	//Get this repeater set
+	$repeater_data = get_post_meta($post_id, 'jplayer', true);
+	
+	//Check if there is anything in the repater set
+	if (!empty($repeater_data)){
+		//Get embed page URL - created upon activation and has shortcode to show player inside
+		$embed_page_permalink = get_permalink( get_option('mp_jplayer_embed_page_id') );
 		
-	//Get embed page URL - created upon activation and has shortcode to show player inside
-	$embed_page_permalink = get_permalink( get_option('mp_jplayer_embed_page_id') );
-	
-	//Get user set height for this player
-	$embed_height = get_post_meta($post_id, 'embed_height', true);
-	$embed_height = !empty($embed_height) ? $embed_height : '100';
-	
-	//Set output for the description to display the embed code for the jplayer
-	$description = '<br /><br />';
-	$description .= '<textarea style="width: 766px; height: 41px;">';
-	$description .= '<iframe id="mp_jplayer_embed_' . $post_id . '" onload="mp_jplayer_embed_iframe_loaded()" width="560px" height="' . $embed_height . 'px" src="' . $embed_page_permalink . '?id=' . $post_id . '&slug=jplayer" frameborder="0" allowfullscreen></iframe>';	
-	$description .= '</textarea>'; 
+		//Get user set height for this player
+		$embed_height = get_post_meta($post_id, 'embed_height', true);
+		$embed_height = !empty($embed_height) ? $embed_height : '100';
+		
+		//Set output for the description to display the embed code for the jplayer
+		$description = '<br /><br />';
+		$description .= '<textarea style="width: 766px; height: 41px;">';
+		$description .= '<iframe id="mp_jplayer_embed_' . $post_id . '" width="560px" height="' . $embed_height . 'px" src="' . get_permalink($post_id) . '?jplayer_embed=true" frameborder="0" allowfullscreen></iframe>';
+		$description .= '</textarea>'; 
+	}else{
+		//Set output for the description to display the embed code for the jplayer
+		$description = '<br /><br />';
+		$description .= 'Add some data to preview the player';	
+	}
 	
 	//Return the description
 	return $description;
@@ -95,18 +105,27 @@ add_filter('mp_embed_code_description', 'mp_jplayer_embed_set_embed_code', 10, 2
  * We do it in a filter because it makes the post_id available to us
  */ 
 function mp_jplayer_embed_set_preview_code($description, $post_id){
+	
+	//Get this repeater set
+	$repeater_data = get_post_meta($post_id, 'jplayer', true);
+	
+	//Check if there is anything in the repater set
+	if (!empty($repeater_data)){
 		
-	//Get embed page URL - created upon activation and has shortcode to show player inside
-	$embed_page_permalink = get_permalink( get_option('mp_jplayer_embed_page_id') );
-	
-	//Get user set height for this player
-	$embed_height = get_post_meta($post_id, 'embed_height', true);
-	$embed_height = !empty($embed_height) ? $embed_height : '100';
-	
-	//Set output for the description to display the embed code for the jplayer
-	$description = '<br /><br />';
-	$description .= '<iframe id="mp_jplayer_embed_' . $post_id . '" onload="mp_jplayer_embed_iframe_loaded()" width="560px" height="' . $embed_height . 'px" src="' . $embed_page_permalink . '?id=' . $post_id . '&slug=jplayer" frameborder="0" allowfullscreen></iframe>';	
-	
+		//Get user set height for this player
+		$embed_height = get_post_meta($post_id, 'embed_height', true);
+		$embed_height = !empty($embed_height) ? $embed_height : '100';
+		
+		//Set output for the description to display the embed code for the jplayer
+		$description = '<br /><br />';
+		$description .= '<iframe id="mp_jplayer_embed_' . $post_id . '" width="560px" height="' . $embed_height . 'px" src="' . get_permalink($post_id) . '?jplayer_embed=true" frameborder="0" allowfullscreen></iframe>';
+	}
+	else{
+		//Set output for the description to display the embed code for the jplayer
+		$description = '<br /><br />';
+		$description .= 'Add some data to preview the player';	
+	}
+		
 	//Return the description
 	return $description;
 }

@@ -96,56 +96,58 @@ add_action( 'init', 'mp_jplayer_textdomain', 1 );
 | INCLUDES
 |--------------------------------------------------------------------------
 */
-
-/**
- * If mp_core isn't active, stop and install it now
- */
-if (!function_exists('mp_core_textdomain')){
-	
+function mp_jplayer_include_files(){
 	/**
-	 * Include Plugin Checker
+	 * If mp_core isn't active, stop and install it now
 	 */
-	require( MP_JPLAYER_PLUGIN_DIR . 'includes/plugin-checker/plugin-checker.php' );
-	
+	if (!function_exists('mp_core_textdomain')){
+		
+		/**
+		 * Include Plugin Checker
+		 */
+		require( MP_JPLAYER_PLUGIN_DIR . 'includes/plugin-checker/plugin-checker.php' );
+		
+		/**
+		 * Check if wp_core in installed
+		 */
+		require( MP_JPLAYER_PLUGIN_DIR . 'includes/plugin-checker/included-plugins/mp-core-check.php' );
+		
+	}
 	/**
-	 * Check if wp_core in installed
+	 * Otherwise, if mp_core is active, carry out the plugin's functions
 	 */
-	require( MP_JPLAYER_PLUGIN_DIR . 'includes/plugin-checker/included-plugins/mp-core-check.php' );
-	
+	else{
+		/**
+		 * Activation Hook for jPlayer
+		 */
+		//register_activation_hook( __FILE__, 'mp_jplayer_activate' );
+		//require( MP_JPLAYER_PLUGIN_DIR . 'includes/misc-functions/activation.php' );
+		
+		/**
+		 * Custom Post Type for jPlayer
+		 */
+		require( MP_JPLAYER_PLUGIN_DIR . 'includes/custom-post-types/jplayer.php' );
+		
+		/**
+		 * Embed Page Shortcode
+		 */
+		require( MP_JPLAYER_PLUGIN_DIR . 'includes/misc-functions/embed-page-function.php' );
+		
+		/**
+		 * Metabox for Custom Post Type for jPlayer
+		 */
+		require( MP_JPLAYER_PLUGIN_DIR . 'includes/metaboxes/jplayer.php' );
+		
+		/**
+		 * Metabox for Embed Player for jPlayer
+		 */
+		require( MP_JPLAYER_PLUGIN_DIR . 'includes/metaboxes/embed.php' );
+		
+		/**
+		 * Include jplayer template tag from mp_core
+		 */
+		require( MP_JPLAYER_PLUGIN_DIR . 'includes/jplayer/jplayer.php' );
+		
+	}
 }
-/**
- * Otherwise, if mp_core is active, carry out the plugin's functions
- */
-else{
-	/**
-	 * Activation Hook for jPlayer
-	 */
-	register_activation_hook( __FILE__, 'mp_jplayer_activate' );
-	require( MP_JPLAYER_PLUGIN_DIR . 'includes/misc-functions/activation.php' );
-	
-	/**
-	 * Custom Post Type for jPlayer
-	 */
-	require( MP_JPLAYER_PLUGIN_DIR . 'includes/custom-post-types/jplayer.php' );
-	
-	/**
-	 * Embed Page Shortcode
-	 */
-	require( MP_JPLAYER_PLUGIN_DIR . 'includes/misc-functions/shortcodes/embed-page-shortcode.php' );
-	
-	/**
-	 * Metabox for Custom Post Type for jPlayer
-	 */
-	require( MP_JPLAYER_PLUGIN_DIR . 'includes/metaboxes/jplayer.php' );
-	
-	/**
-	 * Metabox for Embed Player for jPlayer
-	 */
-	require( MP_JPLAYER_PLUGIN_DIR . 'includes/metaboxes/embed.php' );
-	
-	/**
-	 * Include jplayer template tag from mp_core
-	 */
-	require( MP_JPLAYER_PLUGIN_DIR . 'includes/jplayer/jplayer.php' );
-	
-}
+add_action('plugins_loaded', 'mp_jplayer_include_files', 9);

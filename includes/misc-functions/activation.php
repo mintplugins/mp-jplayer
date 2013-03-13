@@ -1,6 +1,7 @@
 <?php
 /**
  * Activation Hook for jPlayer
+ * CURRENTLY DISABLED AND NOT INCLUDED!!!
  */
 function mp_jplayer_activate(){
 	
