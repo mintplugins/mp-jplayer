@@ -110,7 +110,7 @@ div.jp-video-play{
 }
 .jp-video-play-icon:hover{
 	text-decoration:none;
-	color:#00cc99;	
+	color:#878787;	
 }
 a.jp-play, a.jp-pause{
 	padding: 9px 5px 9px;
@@ -126,7 +126,7 @@ a.jp-repeat, a.jp-repeat-off{
 	margin:9px 5px 0px 5px;	
 }
 .jp-controls a:hover, .jp-toggles a:hover, a.loop-off, .jp-controls a.shuffle-off, .jp-controls a.jp-repeat-off{
-	color:#00cc99;
+	color:#878787;
 }
 .jp-gui{
 	position:relative;	
@@ -150,7 +150,7 @@ a.jp-repeat, a.jp-repeat-off{
 	height:12px;	
 }
 .jp-playlist ul li:hover{
-	background:	#00cc99;
+	background:	#878787;
 }
 .jp-free-media{
 	float:right;
@@ -189,7 +189,7 @@ div.jp-play-bar {
    	-webkit-border-radius: 10px 0 0 10px;
 	-moz-border-radius: 10px 0 0 10px;
 	border-radius: 10px 0 0 10px;
-	background: #00cc99;
+	background: #878787;
 }
 
 /* VOLUME CONTROLS */
@@ -214,7 +214,7 @@ div.jp-volume-bar-value {
 	-webkit-border-radius: 10px 0 0 10px;
 	-moz-border-radius: 10px 0 0 10px;
 	border-radius: 10px 0 0 10px;
-	background: #00cc99;
+	background: #878787;
 }
 
 /* VIDEO PLAYER */

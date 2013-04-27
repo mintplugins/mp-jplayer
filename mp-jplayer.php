@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: Move Plugins - jPlayer
+Plugin Name: MP JPlayer
 Plugin URI: http://moveplugins.com
 Description: Simple function or shortcode to display skinnable jPlayer
 Version: 1.0
-Author: Phil Johnston
+Author: Move Plugins
 Author URI: http://moveplugins.com
 Text Domain: mp_jplayer
 Domain Path: languages
@@ -117,6 +117,12 @@ function mp_jplayer_include_files(){
 	 * Otherwise, if mp_core is active, carry out the plugin's functions
 	 */
 	else{
+		
+		/**
+		 * Update script - keeps this plugin up to date
+		 */
+		require( MP_JPLAYER_PLUGIN_DIR . 'includes/updater/mp-jplayer-update.php' );
+		
 		/**
 		 * Activation Hook for jPlayer
 		 */
