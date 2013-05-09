@@ -17,7 +17,7 @@ function mp_jplayer_enqueue_jplayer_script(){
 	wp_enqueue_style('mp_jplayer_mp_jplayer_skin', $jplayer_skin_location);
 	
 	//Filter or set default skin for jplayer 
-	$jplayer_font_location = has_filter('mp_jplayer_font_location') ? apply_filters( 'mp_jplayer_font_location', $first_output) : plugins_url('css/jplayer-mp-core-icon-font.css', dirname(__FILE__));
+	$jplayer_font_location = has_filter('mp_jplayer_font_css_location') ? apply_filters( 'mp_jplayer_font_css_location', $first_output) : plugins_url('css/jplayer-mp-core-icon-font.css', dirname(__FILE__));
 	
 	//Icon font for jplayer 
 	wp_enqueue_style('mp_jplayer_mp_jplayer_icon_font', $jplayer_font_location);

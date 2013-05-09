@@ -47,7 +47,7 @@ function mp_jplayer_post_type() {
 		register_post_type( 'mp_jplayer', apply_filters( 'mp_jplayer_slide_post_type_args', $slide_args ) );
 	}
 }
-add_action( 'init', 'mp_jplayer_post_type', 100 );
+add_action( 'init', 'mp_jplayer_post_type', 0 );
 
 /**
  * jPlayer Taxonomy
