@@ -33,19 +33,25 @@ function mp_jplayer($post_id, $content){
 	//Set/Call the $post_id global
 	global $previous_post_id;
 	
+	//Set blank html output
+	$html_output = NULL;
+	
 	//Make sure we haven't created a jplayer with this id on this page already
 	if ($post_id != $previous_post_id){
 		
-		//If the $content variable isn't an array
+		//If the $content variable isn't an array - which means that the array is attached to this post in a post meta
 		if (!is_array($content)){
 			$medias = get_post_meta( $post_id, $content, $single = true );
 		}
-		//If the $content variable IS an array
+		//If the $content variable IS an array - the array of mp3s has been passed directly to this function as an array
 		else{
 			$medias = $content;	
 		}
 		
-		if (!empty($medias)){
+		//If the first song doesn't have a title
+		//there is a 99.99% chance that this array is either set up improperly,
+		//or there are no songs that have been added - so only create the player if there is a title for the first song.
+		if (!empty($medias[0]['title'])){
 			
 			//Set supplied array to empty array
 			$supplied = array();
@@ -54,8 +60,8 @@ function mp_jplayer($post_id, $content){
 			 * Output Jquery and HTML for new player
 			 */
 			 
-			?>
-			<script type="text/javascript">
+			
+			$html_output = '<script type="text/javascript">
 		
 			//<![CDATA[
 			
@@ -63,66 +69,68 @@ function mp_jplayer($post_id, $content){
 			
 				new jPlayerPlaylist({
 			
-					jPlayer: "#<?php echo $post_id; ?>_jquery_jplayer",
+					jPlayer: "#' . $post_id . '_jquery_jplayer",
 			
-					cssSelectorAncestor: "#<?php echo $post_id; ?>_jp_container"
+					cssSelectorAncestor: "#' . $post_id . '_jp_container"
 			
-				}, [
-			
-				<?php 
+				}, [';
 				
 				foreach ($medias as $media){
-					echo '{';
+					$html_output .= '{';
 						foreach ($media as $media_key => $media_item){
 							/**
 							 * When creating your metabox
 							 * Media keys (field_ids) should be named after what they represent
 							 * EG: title, poster, artist, m4v, ogv, webmv
 							 */
-							echo !empty($media_item) ? $media_key . ':"' . $media_item . '",' : NULL;
+							$html_output .= !empty($media_item) ? $media_key . ':"' . $media_item . '",' : NULL;
 							
 							//Add this mediakey to the supplied array
 							if (!in_array($media_key, $supplied) && !empty($media_item)){
 								array_push($supplied, $media_key);
 							}
 						}
-					echo '},';
+					$html_output .= '},';
 				}
 						
-				?>
+				
 			
-				], {
+				$html_output .= '], {
 					playlistOptions: {
 						displayTime: 0,
 						addTime: 0,
 						removeTime: 0,
 						shuffleTime: 0,
 					},
-					swfPath: "<?php echo plugins_url( 'jplayer', dirname(__FILE__)); ?>",
+					swfPath: "' . plugins_url( 'jplayer', dirname(__FILE__)) . '",
 					wmode: "window",
-					supplied: "<?php 
+					supplied: "';
+					
 					$counter = 1;
 					foreach ($supplied as $supply){
-							echo $counter > 1 ? ',' : NULL;
+							$html_output .= $counter > 1 ? ',' : NULL;
 							$counter = $counter+1;
-							echo $supply;
-					}?>"
+							$html_output .= $supply;
+					}
+					$html_output .= '"';
 		
-				});
+				$html_output .= '});
 			
 			});
 			
 			//]]>
 			
 			</script>
-			<div id="<?php echo $post_id; ?>_jp_container" class="jp-video jp-video-270p">
+			<div id="' . $post_id . '_jp_container" class="mp-jplayer-container jp-video jp-video-270p">
 		
-					<div class="jp-type-playlist">
+					<div class="jp-type-playlist">';
 						
 					   
-						<div id="<?php echo $post_id; ?>_jquery_jplayer" class="jp-jplayer" <?php echo in_array('m4v', $supplied) ? 'style="display:block;"' : 'style="display:none;"'; ?>></div>
+						$html_output .= '<div id="' . $post_id . '_jquery_jplayer" class="jp-jplayer" ';
+						
+						$html_output .= in_array('m4v', $supplied) ? 'style="display:block;"' : 'style="display:none;"' . '></div>';
 					
-						<div class="jp-gui">
+						$html_output .= '<div class="jp-gui">
 		
 							<div class="jp-video-play">
 		
@@ -153,21 +161,21 @@ function mp_jplayer($post_id, $content){
 										<li><a href="javascript:;" class="jp-mute icon-volume-off" tabindex="1" title="mute"></a></li>
 										<!--unmute-->
 										<li><a href="javascript:;" class="jp-unmute icon-volume-up" tabindex="1" title="unmute"></a></li>
+										';
 										
-										<?php 
 										//If there is more than 1 track
-										if (is_array($medias) && count($medias) > 1){?>
-											<!--shuffle-->
+										if (is_array($medias) && count($medias) > 1){
+											$html_output .= '<!--shuffle-->
 											<li><a href="javascript:;" class="jp-shuffle icon-shuffle" tabindex="1" title="shuffle"></a></li>
 											<!--shuffle off-->
 											<li><a href="javascript:;" class="jp-shuffle-off icon-shuffle shuffle-off" tabindex="1" title="shuffle off"></a></li>
 											<!--repeat-->
 											<li><a href="javascript:;" class="jp-repeat icon-loop" tabindex="1" title="repeat"></a></li>
 											<!--repeat off-->
-											<li><a href="javascript:;" class="jp-repeat-off icon-loop loop-off" tabindex="1" title="repeat off"></a></li>
-										<?php } ?>
+											<li><a href="javascript:;" class="jp-repeat-off icon-loop loop-off" tabindex="1" title="repeat off"></a></li>';
+										}
 										
-									</ul>
+									$html_output .= '</ul>
 									
 									<div class="jp-progress">
 										<div class="jp-seek-bar">
@@ -175,14 +183,14 @@ function mp_jplayer($post_id, $content){
 										</div>
 									</div>
 									
-									<ul class="jp-toggles">
-									<?php if (in_array('m4v', $supplied)){?>
-										<!--full screen-->
+									<ul class="jp-toggles">';
+									if (in_array('m4v', $supplied)){
+										$html_output .= '<!--full screen-->
 										<li><a href="javascript:;" class="jp-full-screen icon-resize-full-alt" tabindex="1" title="full screen" ></a></li>
 										<!--restore screen-->
-										<li><a href="javascript:;" class="jp-restore-screen icon-resize-small" tabindex="1" title="restore screen"></a></li>
-									<?php } ?>
-									</ul>
+										<li><a href="javascript:;" class="jp-restore-screen icon-resize-small" tabindex="1" title="restore screen"></a></li>';
+									} 
+									$html_output .= '</ul>
 		
 									<div class="jp-volume-bar">
 		
@@ -204,10 +212,13 @@ function mp_jplayer($post_id, $content){
 		
 							</div>
 		
-						</div>
+						</div>';
 			
-						<div class="jp-playlist" <?php echo !is_array($medias) || count($medias) == 1 ? 'style="display:none"' : NULL; ?>>
+						$html_output .= '<div class="jp-playlist" '; 
+						$html_output .= !is_array($medias) || count($medias) == 1 ? 'style="display:none"' : NULL; 
+						$html_output .= '>';
 		
+							$html_output .= '
 							<ul>
 		
 								<!-- The method Playlist.displayPlaylist() uses this unordered list -->
@@ -217,7 +228,8 @@ function mp_jplayer($post_id, $content){
 							</ul>
 		
 						</div>
-		
+						
+                        <!-- This is showing up for some strange reason when it shouldn\'t. Disabling for now 
 						<div class="jp-no-solution">
 		
 							<span>Update Required</span>
@@ -225,15 +237,16 @@ function mp_jplayer($post_id, $content){
 							To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
 		
 						</div>
+                        -->
 		
 					</div>
 		
-				</div>
-		
-			<?php
+				</div>';
 			
 			//Set the global variable for the post id to the current one
 			$previous_post_id = $post_id;
 		}
 	}
+	
+	return $html_output;
 }

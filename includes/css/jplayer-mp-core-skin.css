@@ -15,6 +15,10 @@
 */
 
 /* MAIN INTERFACE */
+.mp-jplayer-container{
+	display:inline-block;
+	width:100%;	
+}
 div.jp-interface {
  	width: 100%;
  	height: auto;
@@ -323,6 +327,12 @@ div.jp-video a.jp-mute, div.jp-video a.jp-unmute {
 		opacity: 1;
 		-moz-opacity: 1;
 		filter:alpha(opacity=100);
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	div.jp-volume-bar{
+		display:none!important;	
 	}
 }
 

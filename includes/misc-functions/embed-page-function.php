@@ -36,6 +36,8 @@ function mp_jplayer_embed_page( $atts ) {
 		echo '<div id="mp_embedable_video">';
 		echo mp_jplayer($post_id, $slug);
 		echo '</div>';
+		
+		exit;
 	}
 }
 add_action( 'loop_start', 'mp_jplayer_embed_page' );
