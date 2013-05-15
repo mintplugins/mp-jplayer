@@ -87,7 +87,7 @@ function mp_jplayer_embed_set_embed_code($description, $post_id){
 		//Set output for the description to display the embed code for the jplayer
 		$description = '<br /><br />';
 		$description .= '<textarea style="width: 766px; height: 41px;">';
-		$description .= '<iframe id="mp_jplayer_embed_' . $post_id . '" width="560px" height="' . $embed_height . 'px" src="' . get_permalink($post_id) . '?jplayer_embed=true" frameborder="0" allowfullscreen></iframe>';
+		$description .= '<iframe id="mp_jplayer_embed_' . $post_id . '" width="100%" height="' . $embed_height . 'px" src="' . get_permalink($post_id) . '?jplayer_embed=true" frameborder="0" allowfullscreen></iframe>';
 		$description .= '</textarea>'; 
 	}else{
 		//Set output for the description to display the embed code for the jplayer

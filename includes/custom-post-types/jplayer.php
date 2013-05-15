@@ -71,7 +71,7 @@ function mp_jplayer_taxonomy() {
 			'update_item'         => __( 'Update jPlayer Group', 'mp_core' ),
 			'add_new_item'        => __( 'Add New jPlayer Group', 'mp_core' ),
 			'new_item_name'       => __( 'New jPlayer Group Name', 'mp_core' ),
-			'menu_name'           => __( 'jPlayer Group', 'mp_core' ),
+			'menu_name'           => __( 'jPlayer Groups', 'mp_core' ),
 		); 	
   
 		register_taxonomy(  

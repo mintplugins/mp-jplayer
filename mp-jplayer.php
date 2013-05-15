@@ -3,7 +3,7 @@
 Plugin Name: MP JPlayer
 Plugin URI: http://moveplugins.com
 Description: Simple function or shortcode to display skinnable jPlayer
-Version: 1.0
+Version: 1.0.0.0
 Author: Move Plugins
 Author URI: http://moveplugins.com
 Text Domain: mp_jplayer
@@ -153,6 +153,11 @@ function mp_jplayer_include_files(){
 		 * Include jplayer template tag from mp_core
 		 */
 		require( MP_JPLAYER_PLUGIN_DIR . 'includes/jplayer/jplayer.php' );
+		
+		/**
+		 * Include jplayer widget
+		 */
+		require( MP_JPLAYER_PLUGIN_DIR . 'includes/widgets/class-jplayer.php' );
 		
 	}
 }

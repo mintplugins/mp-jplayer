@@ -28,7 +28,7 @@ add_action('wp_enqueue_scripts', 'mp_jplayer_enqueue_jplayer_script');
 /**
  * Jquery for new player
  */
-function mp_jplayer($post_id, $content){
+function mp_jplayer($post_id, $content = 'jplayer'){
 	
 	//Set/Call the $post_id global
 	global $previous_post_id;
@@ -128,9 +128,9 @@ function mp_jplayer($post_id, $content){
 					   
 						$html_output .= '<div id="' . $post_id . '_jquery_jplayer" class="jp-jplayer" ';
 						
-						$html_output .= in_array('m4v', $supplied) ? 'style="display:block;"' : 'style="display:none;"' . '></div>';
+						$html_output .= in_array('m4v', $supplied) ? 'style="display:block;"' : 'style="display:none;"';
 					
-						$html_output .= '<div class="jp-gui">
+						$html_output .= '></div><div class="jp-gui">
 		
 							<div class="jp-video-play">
 		

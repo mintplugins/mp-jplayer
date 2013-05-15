@@ -1,4 +1,4 @@
-=== Move Plugins Core ===
+=== MP JPlayer ===
 Contributors: johnstonphilip
 Donate link: http://moveplugins.com/
 Tags: message bar, header
@@ -8,34 +8,30 @@ Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin gives developers access to a core set of classes for creating Settings, Metaboxes, Widgets, Plugins and more.
+This plugin allows you to create MP3/Video players using the awesome JPlayer. It uses a custom post type with the ability have as many songs per album as you need.
 
 == Description ==
 
-This plugin gives developers access to a core set of classes for creating Settings, Metaboxes, Widgets, Plugins and more.
+This plugin allows you to create MP3/Video players using the awesome JPlayer. It uses a custom post type with the ability have as many songs per album as you need.
 
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
-
-1. Upload the 'message-bar' folder to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to Settings > Message Bar and fill out the options. 
+Full instructions and FAQ available at:
+http://moveplugins.com/doc/mp-jplayer/
 
 == Frequently Asked Questions ==
 
-= What do I do with this?  =
-
-After you install, make sure to fill out all options under the Settings > Message Bar panel in the WordPress admin area.
+Full instructions and FAQ available at:
+http://moveplugins.com/doc/mp-jplayer/
 
 == Screenshots ==
 
-1. This is a screenshot of the Message Bar in action.
+1. Making a new JPlayer
 
-2. This is a screenshot of the Message Bar option.
+2. Sample JPlayer
 
 == Changelog ==
 
-= 1.0 =
+= 1.0.0.0 =
 * Original release
