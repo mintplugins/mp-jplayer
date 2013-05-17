@@ -4,7 +4,7 @@ Donate link: http://moveplugins.com/
 Tags: message bar, header
 Requires at least: 3.0.1
 Tested up to: 3.5
-Stable tag: 4.3
+Stable tag: 1.0.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,9 @@ http://moveplugins.com/doc/mp-jplayer/
 2. Sample JPlayer
 
 == Changelog ==
+
+= 1.0.0.1 = May 17, 2013
+* Changed updates and plugin check from moveplugins.com to repo.moveplugins.com
 
 = 1.0.0.0 =
 * Original release
