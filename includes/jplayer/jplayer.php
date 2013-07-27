@@ -77,18 +77,28 @@ function mp_jplayer($post_id, $content = 'jplayer'){
 				
 				foreach ($medias as $media){
 					$html_output .= '{';
+						
+						$media_key_counter = 0;
+						
 						foreach ($media as $media_key => $media_item){
+							
+							//If this is not the first media key, finish the previous loop with a comma
+							$html_output .= $media_key_counter > 0 ? ',' : NULL;
+							
 							/**
 							 * When creating your metabox
 							 * Media keys (field_ids) should be named after what they represent
 							 * EG: title, poster, artist, m4v, ogv, webmv
 							 */
-							$html_output .= !empty($media_item) ? $media_key . ':"' . $media_item . '",' : NULL;
+							$html_output .= !empty($media_item) ? $media_key . ':"' . $media_item . '"' : NULL;
 							
 							//Add this mediakey to the supplied array
 							if (!in_array($media_key, $supplied) && !empty($media_item)){
 								array_push($supplied, $media_key);
 							}
+							
+							//Increment the media_key_counter
+							$media_key_counter = $media_key_counter + 1;
 						}
 					$html_output .= '},';
 				}
@@ -109,8 +119,8 @@ function mp_jplayer($post_id, $content = 'jplayer'){
 					$counter = 1;
 					foreach ($supplied as $supply){
 							$html_output .= $counter > 1 ? ',' : NULL;
-							$counter = $counter+1;
-							$html_output .= $supply;
+							$counter = $supply != "title" ? $counter+1 : $counter;
+							$html_output .= $supply != "title" ? $supply : NULL;
 					}
 					$html_output .= '"';
 		
@@ -128,7 +138,7 @@ function mp_jplayer($post_id, $content = 'jplayer'){
 					   
 						$html_output .= '<div id="' . $post_id . '_jquery_jplayer" class="jp-jplayer" ';
 						
-						$html_output .= in_array('m4v', $supplied) ? 'style="display:block;"' : 'style="display:none;"';
+						//$html_output .= in_array('m4v', $supplied) ? 'style="display:block;"' : 'style="display:none;"'; <-- this line breaks jplayer on IOS6
 					
 						$html_output .= '></div><div class="jp-gui">
 		
@@ -229,7 +239,7 @@ function mp_jplayer($post_id, $content = 'jplayer'){
 		
 						</div>
 						
-                        <!-- This is showing up for some strange reason when it shouldn\'t. Disabling for now 
+                      
 						<div class="jp-no-solution">
 		
 							<span>Update Required</span>
@@ -237,8 +247,7 @@ function mp_jplayer($post_id, $content = 'jplayer'){
 							To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
 		
 						</div>
-                        -->
-		
+                       
 					</div>
 		
 				</div>';
