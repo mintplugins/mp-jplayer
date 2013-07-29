@@ -83,7 +83,7 @@ function mp_jplayer($post_id, $content = 'jplayer'){
 						foreach ($media as $media_key => $media_item){
 							
 							//If this is not the first media key, finish the previous loop with a comma
-							$html_output .= $media_key_counter > 0 ? ',' : NULL;
+							$html_output .= !empty($media_item) && $media_key_counter > 0 ? ',' : NULL;
 							
 							/**
 							 * When creating your metabox

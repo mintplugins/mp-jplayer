@@ -4,7 +4,7 @@ Donate link: http://moveplugins.com/
 Tags: message bar, header
 Requires at least: 3.0.1
 Tested up to: 3.5
-Stable tag: 1.0.0.3
+Stable tag: 1.0.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,9 @@ http://moveplugins.com/doc/mp-jplayer/
 2. Sample JPlayer
 
 == Changelog ==
+
+= 1.0.0.4 = July 28, 2013
+Added check for blank media items. Was putting extra comma's between items when blank
 
 = 1.0.0.3 = July 27, 2013
 *Took out display:none for video - it was breaking it on IOS6
