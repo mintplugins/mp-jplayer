@@ -24,6 +24,7 @@ div.jp-interface {
  	height: auto;
  	position: relative;
 	background-color:#000000;
+	overflow:hidden;
 }
 .jp-title {
 	width: 100%;

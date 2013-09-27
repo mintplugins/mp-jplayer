@@ -33,15 +33,19 @@ http://moveplugins.com/doc/mp-jplayer/
 
 == Changelog ==
 
+= 1.0.0.5: September 27, 2013 =
+* Change: Plugin Checker/Installer/Updater class and function updates. 
+* Change: API URL change to repo.moveplugins.com -> moveplugins.com.
+
 = 1.0.0.4 = July 28, 2013
-Added check for blank media items. Was putting extra comma's between items when blank
+* Added check for blank media items. Was putting extra comma's between items when blank
 
 = 1.0.0.3 = July 27, 2013
-*Took out display:none for video - it was breaking it on IOS6
-*Added counter for media keys so that extra comments are not inserted at the end of a line with nothing
+* Took out display:none for video - it was breaking it on IOS6
+* Added counter for media keys so that extra comments are not inserted at the end of a line with nothing
 
 = 1.0.0.2 = July 26, 2013
-*plugin-checker/plugin-installer classes change
+* plugin-checker/plugin-installer classes change
 
 = 1.0.0.1 = May 17, 2013
 * Changed updates and plugin check from moveplugins.com to repo.moveplugins.com
